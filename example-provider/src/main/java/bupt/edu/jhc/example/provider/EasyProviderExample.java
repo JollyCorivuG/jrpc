@@ -2,6 +2,7 @@ package bupt.edu.jhc.example.provider;
 
 
 import bupt.edu.jhc.example.common.service.UserService;
+import bupt.edu.jhc.jrpc.RPCApplication;
 import bupt.edu.jhc.jrpc.registry.LocalRegistry;
 import bupt.edu.jhc.jrpc.server.VertxHttpServer;
 
@@ -12,6 +13,9 @@ import bupt.edu.jhc.jrpc.server.VertxHttpServer;
  */
 public class EasyProviderExample {
     public static void main(String[] args) {
+        // RPC 框架初始化
+        RPCApplication.init();
+
         // 注册服务
         LocalRegistry.register(UserService.class.getName(), UserServiceImpl.class);
 
