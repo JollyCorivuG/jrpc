@@ -3,12 +3,14 @@ package bupt.edu.jhc.jrpc;
 import bupt.edu.jhc.jrpc.config.RPCConfig;
 import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
 import bupt.edu.jhc.jrpc.utils.ConfigUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Description: RPC 启动类
  * @Author: <a href="https://github.com/JollyCorivuG">JollyCorivuG</a>
  * @CreateTime: 2024/3/15
  */
+@Slf4j
 public class RPCApplication {
     private static volatile RPCConfig rpcConfig;
 

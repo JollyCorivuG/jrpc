@@ -37,13 +37,14 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.26</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.5.3</version>
-            <scope>test</scope>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -52,5 +53,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
