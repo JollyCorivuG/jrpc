@@ -28,6 +28,8 @@ public class EasyConsumerExample {
         } else {
             System.out.println("获取用户失败");
         }
+
+        System.out.println(userService.getNumber());
     }
 
 }
