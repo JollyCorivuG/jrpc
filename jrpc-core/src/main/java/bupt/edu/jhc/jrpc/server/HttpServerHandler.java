@@ -1,10 +1,11 @@
 package bupt.edu.jhc.jrpc.server;
 
+import bupt.edu.jhc.jrpc.RPCApplication;
 import bupt.edu.jhc.jrpc.domain.req.RPCReq;
 import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
 import bupt.edu.jhc.jrpc.registry.LocalRegistry;
-import bupt.edu.jhc.jrpc.serializer.JDKSerializer;
 import bupt.edu.jhc.jrpc.serializer.Serializer;
+import bupt.edu.jhc.jrpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -20,8 +21,8 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest req) {
         System.out.println("收到请求：" + req.uri() + "，请求方法：" + req.method());
-        // 创建序列化器
-        Serializer serializer = new JDKSerializer();
+        // 根据配置文件获取序列化器
+        Serializer serializer = SerializerFactory.getSerializer(RPCApplication.getRpcConfig().getSerializer());
 
         // 异步处理 HTTP 请求
         req.bodyHandler(body -> {

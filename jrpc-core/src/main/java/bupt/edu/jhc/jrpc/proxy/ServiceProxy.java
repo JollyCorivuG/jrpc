@@ -1,9 +1,10 @@
 package bupt.edu.jhc.jrpc.proxy;
 
+import bupt.edu.jhc.jrpc.RPCApplication;
 import bupt.edu.jhc.jrpc.domain.req.RPCReq;
 import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
-import bupt.edu.jhc.jrpc.serializer.JDKSerializer;
 import bupt.edu.jhc.jrpc.serializer.Serializer;
+import bupt.edu.jhc.jrpc.serializer.SerializerFactory;
 import cn.hutool.http.HttpRequest;
 
 import java.io.IOException;
@@ -18,8 +19,8 @@ import java.lang.reflect.Method;
 public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        // 指定序列化器
-        Serializer serializer = new JDKSerializer();
+        // 获取配置文件指定的序列化器
+        Serializer serializer = SerializerFactory.getSerializer(RPCApplication.getRpcConfig().getSerializer());
 
         RPCReq rpcReq = RPCReq.builder()
                 .serviceName(method.getDeclaringClass().getName())

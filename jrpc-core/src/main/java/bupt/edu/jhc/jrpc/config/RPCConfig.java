@@ -1,5 +1,6 @@
 package bupt.edu.jhc.jrpc.config;
 
+import bupt.edu.jhc.jrpc.serializer.SerializerKeys;
 import lombok.Data;
 
 /**
@@ -14,4 +15,5 @@ public class RPCConfig {
     private String serverHost = "localhost";
     private Integer serverPort = 8080;
     private Boolean mock = false;
+    private String serializer = SerializerKeys.JDK;
 }

@@ -1,0 +1,3 @@
+jdk=bupt.edu.jhc.jrpc.serializer.JDKSerializer
+kryo=bupt.edu.jhc.jrpc.serializer.KryoSerializer
+hessian=bupt.edu.jhc.jrpc.serializer.HessianSerializer
