@@ -3,7 +3,10 @@ package bupt.edu.jhc.example.provider;
 
 import bupt.edu.jhc.example.common.service.UserService;
 import bupt.edu.jhc.jrpc.RPCApplication;
+import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
 import bupt.edu.jhc.jrpc.registry.LocalRegistry;
+import bupt.edu.jhc.jrpc.registry.Registry;
+import bupt.edu.jhc.jrpc.registry.RegistryFactory;
 import bupt.edu.jhc.jrpc.server.VertxHttpServer;
 
 /**
@@ -17,10 +20,27 @@ public class EasyProviderExample {
         RPCApplication.init();
 
         // 注册服务
-        LocalRegistry.register(UserService.class.getName(), UserServiceImpl.class);
+        var serviceName = UserService.class.getName();
+        LocalRegistry.register(serviceName, UserServiceImpl.class);
+
+        // 注册服务到注册中心
+        var rpcConfig = RPCApplication.getRpcConfig();
+        var registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        var serviceMetaInfo = new ServiceMetaInfo();
+        serviceMetaInfo.setName(serviceName);
+        serviceMetaInfo.setVersion("1.0");
+        serviceMetaInfo.setHost(rpcConfig.getServerHost());
+        serviceMetaInfo.setPort(rpcConfig.getServerPort());
+
+        try {
+            registry.register(serviceMetaInfo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         // 启动 web 服务
         var httpServer = new VertxHttpServer();
-        httpServer.start(8080);
+        httpServer.start(8090);
     }
 }

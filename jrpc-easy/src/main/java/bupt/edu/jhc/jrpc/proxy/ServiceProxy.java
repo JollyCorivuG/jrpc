@@ -30,7 +30,7 @@ public class ServiceProxy implements InvocationHandler {
         try {
             var reqBytes = serializer.serialize(rpcReq);
             byte[] result;
-            try (var resp = HttpRequest.post("http://localhost:8080")
+            try (var resp = HttpRequest.post("http://localhost:8090")
                     .body(reqBytes)
                     .execute()) {
                 result = resp.bodyBytes();

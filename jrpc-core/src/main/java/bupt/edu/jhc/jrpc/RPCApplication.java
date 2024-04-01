@@ -2,6 +2,8 @@ package bupt.edu.jhc.jrpc;
 
 import bupt.edu.jhc.jrpc.config.RPCConfig;
 import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
+import bupt.edu.jhc.jrpc.registry.Registry;
+import bupt.edu.jhc.jrpc.registry.RegistryFactory;
 import bupt.edu.jhc.jrpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +17,15 @@ public class RPCApplication {
     private static volatile RPCConfig rpcConfig;
 
     public static void init(RPCConfig newRPCConfig) {
+        // RPC 配置初始化
         rpcConfig = newRPCConfig;
+        log.info("RPC init, config = {}", rpcConfig.toString());
+
+        // 注册中心初始化
+        var registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("Registry init, config = {}", registryConfig.toString());
     }
 
     public static void init() {

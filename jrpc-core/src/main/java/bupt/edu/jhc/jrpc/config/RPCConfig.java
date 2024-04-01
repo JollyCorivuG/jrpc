@@ -13,7 +13,8 @@ public class RPCConfig {
     private String name = "jRPC";
     private String version = "1.0.0";
     private String serverHost = "localhost";
-    private Integer serverPort = 8080;
+    private Integer serverPort = 8090;
     private Boolean mock = false;
     private String serializer = SerializerKeys.JDK;
+    private RegistryConfig registryConfig = new RegistryConfig();
 }

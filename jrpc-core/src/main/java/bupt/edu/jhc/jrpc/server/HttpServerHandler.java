@@ -56,7 +56,6 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 rpcResp.setException(e);
             }
             doResp(req, rpcResp, serializer);
-
         });
     }
 

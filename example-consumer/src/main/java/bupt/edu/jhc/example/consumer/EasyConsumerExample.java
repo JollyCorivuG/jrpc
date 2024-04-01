@@ -28,7 +28,6 @@ public class EasyConsumerExample {
         } else {
             System.out.println("获取用户失败");
         }
-
     }
 
 }
