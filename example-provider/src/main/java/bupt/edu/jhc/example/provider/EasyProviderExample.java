@@ -41,6 +41,6 @@ public class EasyProviderExample {
 
         // 启动 web 服务
         var httpServer = new VertxHttpServer();
-        httpServer.start(8090);
+        httpServer.start(rpcConfig.getServerPort());
     }
 }

@@ -21,7 +21,6 @@ public class EasyConsumerExample {
         var user = new User();
         user.setName("JollyCorivuG");
 
-        // 调用
         var newUser = userService.getUser(user);
         if (newUser != null) {
             System.out.println(newUser.getName());

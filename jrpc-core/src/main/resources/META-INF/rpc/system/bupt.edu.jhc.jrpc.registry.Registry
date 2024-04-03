@@ -1,1 +1,2 @@
 etcd=bupt.edu.jhc.jrpc.registry.EtcdRegistry
+zookeeper=bupt.edu.jhc.jrpc.registry.ZooKeeperRegistry

@@ -19,6 +19,12 @@ public interface Registry {
     void init(RegistryConfig config);
 
     /**
+     * 心跳检测
+     *
+     */
+    void heartBeat();
+
+    /**
      * 注册服务
      *
      * @param serviceMetaInfo
@@ -39,6 +45,13 @@ public interface Registry {
      * @return List<ServiceMetaInfo> 服务元消息列表
      */
     List<ServiceMetaInfo> serviceDiscovery(String serviceKey);
+
+    /**
+     * 监听（消费端）
+     *
+     * @param serviceNodeKey
+     */
+    void watch(String serviceNodeKey);
 
     /**
      * 服务销毁
