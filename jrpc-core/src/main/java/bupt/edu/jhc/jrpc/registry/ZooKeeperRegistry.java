@@ -14,7 +14,6 @@ import org.apache.curator.x.discovery.ServiceDiscoveryBuilder;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.curator.x.discovery.details.JsonInstanceSerializer;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,7 +82,7 @@ public class ZooKeeperRegistry implements Registry {
         serviceDiscovery.registerService(buildServiceInstance(serviceMetaInfo));
 
         // 添加节点信息到本地缓存
-        String registerKey = ZK_ROOT_PATH + "/" + serviceMetaInfo.getServiceNodeKey();
+        var registerKey = ZK_ROOT_PATH + "/" + serviceMetaInfo.getServiceNodeKey();
         localRegisterNodeKeySet.add(registerKey);
     }
 
@@ -95,14 +94,14 @@ public class ZooKeeperRegistry implements Registry {
             throw new RuntimeException(e);
         }
         // 从本地缓存移除
-        String registerKey = ZK_ROOT_PATH + "/" + serviceMetaInfo.getServiceNodeKey();
+        var registerKey = ZK_ROOT_PATH + "/" + serviceMetaInfo.getServiceNodeKey();
         localRegisterNodeKeySet.remove(registerKey);
     }
 
     @Override
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
         // 优先从缓存获取服务
-        List<ServiceMetaInfo> cachedServiceMetaInfoList = registryServiceCache.readCache();
+        var cachedServiceMetaInfoList = registryServiceCache.readCache();
         if (cachedServiceMetaInfoList != null) {
             log.info("从缓存获取服务列表：{}", cachedServiceMetaInfoList);
             return cachedServiceMetaInfoList;
@@ -110,10 +109,10 @@ public class ZooKeeperRegistry implements Registry {
 
         try {
             // 查询服务信息
-            Collection<ServiceInstance<ServiceMetaInfo>> serviceInstanceList = serviceDiscovery.queryForInstances(serviceKey);
+            var serviceInstanceList = serviceDiscovery.queryForInstances(serviceKey);
 
             // 解析服务信息
-            List<ServiceMetaInfo> serviceMetaInfoList = serviceInstanceList.stream()
+            var serviceMetaInfoList = serviceInstanceList.stream()
                     .map(ServiceInstance::getPayload)
                     .collect(Collectors.toList());
 
@@ -137,14 +136,12 @@ public class ZooKeeperRegistry implements Registry {
      */
     @Override
     public void watch(String serviceNodeKey) {
-        String watchKey = ZK_ROOT_PATH + "/" + serviceNodeKey;
-        boolean newWatch = watchingKeySet.add(watchKey);
-        if (newWatch) {
+        var watchKey = ZK_ROOT_PATH + "/" + serviceNodeKey;
+        if (watchingKeySet.add(watchKey)) {
             CuratorCache curatorCache = CuratorCache.build(client, watchKey);
             curatorCache.start();
             curatorCache.listenable().addListener(
-                    CuratorCacheListener
-                            .builder()
+                    CuratorCacheListener.builder()
                             .forDeletes(childData -> registryServiceCache.clearCache())
                             .forChanges(((oldNode, node) -> registryServiceCache.clearCache()))
                             .build()
@@ -156,7 +153,7 @@ public class ZooKeeperRegistry implements Registry {
     public void destroy() {
         log.info("当前节点下线");
         // 下线节点（这一步可以不做，因为都是临时节点，服务下线，自然就被删掉了）
-        for (String key : localRegisterNodeKeySet) {
+        for (var key : localRegisterNodeKeySet) {
             try {
                 client.delete().guaranteed().forPath(key);
             } catch (Exception e) {
@@ -177,7 +174,7 @@ public class ZooKeeperRegistry implements Registry {
      * @return ServiceInstance<ServiceMetaInfo> 服务实例
      */
     private ServiceInstance<ServiceMetaInfo> buildServiceInstance(ServiceMetaInfo serviceMetaInfo) {
-        String serviceAddress = serviceMetaInfo.getHost() + ":" + serviceMetaInfo.getPort();
+        var serviceAddress = serviceMetaInfo.getHost() + ":" + serviceMetaInfo.getPort();
         try {
             return ServiceInstance
                     .<ServiceMetaInfo>builder()

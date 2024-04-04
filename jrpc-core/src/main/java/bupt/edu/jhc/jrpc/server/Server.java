@@ -1,11 +1,11 @@
 package bupt.edu.jhc.jrpc.server;
 
 /**
- * @Description: HTTP 服务器接口
+ * @Description: 服务器接口
  * @Author: <a href="https://github.com/JollyCorivuG">JollyCorivuG</a>
  * @CreateTime: 2024/3/14
  */
-public interface HttpServer {
+public interface Server {
     /**
      * 启动服务器
      *

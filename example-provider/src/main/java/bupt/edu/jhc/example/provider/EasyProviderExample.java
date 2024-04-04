@@ -7,7 +7,8 @@ import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
 import bupt.edu.jhc.jrpc.registry.LocalRegistry;
 import bupt.edu.jhc.jrpc.registry.Registry;
 import bupt.edu.jhc.jrpc.registry.RegistryFactory;
-import bupt.edu.jhc.jrpc.server.VertxHttpServer;
+import bupt.edu.jhc.jrpc.server.Server;
+import bupt.edu.jhc.jrpc.server.tcp.VertxTcpServer;
 
 /**
  * @Description: 建议服务提供者示例
@@ -39,8 +40,8 @@ public class EasyProviderExample {
             throw new RuntimeException(e);
         }
 
-        // 启动 web 服务
-        var httpServer = new VertxHttpServer();
-        httpServer.start(rpcConfig.getServerPort());
+        // 启动 TCP 服务
+        Server tcpServer  = new VertxTcpServer();
+        tcpServer.start(rpcConfig.getServerPort());
     }
 }

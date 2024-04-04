@@ -3,11 +3,11 @@ package bupt.edu.jhc.jrpc.server;
 import io.vertx.core.Vertx;
 
 /**
- * @Description: Vert.x 服务器
+ * @Description: Vert.x HTTP 服务器
  * @Author: <a href="https://github.com/JollyCorivuG">JollyCorivuG</a>
  * @CreateTime: 2024/3/14
  */
-public class VertxHttpServer implements HttpServer {
+public class VertxHttpServer implements Server {
     @Override
     public void start(int port) {
         // 1.创建 Vert.x 实例
