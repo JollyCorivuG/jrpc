@@ -1,4 +1,4 @@
-package bupt.edu.jhc.jrpc.domain.resp;
+package bupt.edu.jhc.jrpc.domain.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

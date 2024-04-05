@@ -3,7 +3,7 @@ package bupt.edu.jhc.example.provider;
 
 import bupt.edu.jhc.example.common.service.UserService;
 import bupt.edu.jhc.jrpc.RPCApplication;
-import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
 import bupt.edu.jhc.jrpc.registry.LocalRegistry;
 import bupt.edu.jhc.jrpc.registry.Registry;
 import bupt.edu.jhc.jrpc.registry.RegistryFactory;

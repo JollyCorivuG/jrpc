@@ -1,7 +1,7 @@
 package bupt.edu.jhc.jrpc.server.tcp;
 
-import bupt.edu.jhc.jrpc.domain.req.RPCReq;
-import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
+import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.resp.RPCResp;
 import bupt.edu.jhc.jrpc.protocol.ProtocolMsg;
 import bupt.edu.jhc.jrpc.protocol.ProtocolMsgDecoder;
 import bupt.edu.jhc.jrpc.protocol.ProtocolMsgEncoder;
@@ -31,6 +31,7 @@ public class TcpServerHandler implements Handler<NetSocket> {
                 throw new RuntimeException("协议消息解码错误");
             }
             var rpcReq = protocolMsg.getBody();
+            System.out.println("收到请求：" + rpcReq.getServiceName() + "." + rpcReq.getMethodName());
 
             // 处理请求
             // 构造响应结果对象
@@ -63,6 +64,7 @@ public class TcpServerHandler implements Handler<NetSocket> {
             } catch (IOException e) {
                 throw new RuntimeException("协议消息编码错误");
             }
+            System.out.println("响应已发送：" + rpcResp);
         });
         netSocket.handler(bufferHandlerWrapper);
     }

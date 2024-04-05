@@ -1,7 +1,7 @@
 package bupt.edu.jhc.jrpc.protocol;
 
-import bupt.edu.jhc.jrpc.domain.req.RPCReq;
-import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
+import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.resp.RPCResp;
 import bupt.edu.jhc.jrpc.protocol.enums.ProtocolMsgSerializerEnum;
 import bupt.edu.jhc.jrpc.protocol.enums.ProtocolMsgTypeEnum;
 import bupt.edu.jhc.jrpc.serializer.Serializer;

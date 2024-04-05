@@ -1,7 +1,7 @@
 package bupt.edu.jhc.jrpc.registry;
 
 import bupt.edu.jhc.jrpc.config.RegistryConfig;
-import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

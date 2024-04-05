@@ -1,8 +1,8 @@
 package bupt.edu.jhc.jrpc.server;
 
 import bupt.edu.jhc.jrpc.RPCApplication;
-import bupt.edu.jhc.jrpc.domain.req.RPCReq;
-import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
+import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.resp.RPCResp;
 import bupt.edu.jhc.jrpc.registry.LocalRegistry;
 import bupt.edu.jhc.jrpc.serializer.Serializer;
 import bupt.edu.jhc.jrpc.serializer.SerializerFactory;

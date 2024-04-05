@@ -7,6 +7,8 @@ import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
 import bupt.edu.jhc.jrpc.proxy.ServiceProxyFactory;
 import bupt.edu.jhc.jrpc.utils.ConfigUtils;
 
+import java.util.stream.IntStream;
+
 /**
  * @Description: 简易服务消费者示例
  * @Author: <a href="https://github.com/JollyCorivuG">JollyCorivuG</a>
@@ -18,15 +20,16 @@ public class EasyConsumerExample {
         System.out.println(rpcConfig);
 
         UserService userService = ServiceProxyFactory.getProxy(UserService.class);
-        var user = new User();
-        user.setName("JollyCorivuG");
-
-        var newUser = userService.getUser(user);
-        if (newUser != null) {
-            System.out.println(newUser.getName());
-        } else {
-            System.out.println("获取用户失败");
-        }
+        IntStream.range(0, 3).forEach(i -> {
+            var user = new User();
+            user.setName("JollyCorivuG" + i);
+            var newUser = userService.getUser(user);
+            if (newUser != null) {
+                System.out.println(newUser.getName());
+            } else {
+                System.out.println("获取用户失败");
+            }
+        });
     }
 
 }

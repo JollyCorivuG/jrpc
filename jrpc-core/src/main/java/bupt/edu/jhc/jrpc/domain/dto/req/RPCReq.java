@@ -1,4 +1,4 @@
-package bupt.edu.jhc.jrpc.domain.req;
+package bupt.edu.jhc.jrpc.domain.dto.req;
 
 import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
 import lombok.AllArgsConstructor;

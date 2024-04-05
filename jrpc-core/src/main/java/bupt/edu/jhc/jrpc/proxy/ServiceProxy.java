@@ -1,9 +1,11 @@
 package bupt.edu.jhc.jrpc.proxy;
 
 import bupt.edu.jhc.jrpc.RPCApplication;
-import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
 import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
-import bupt.edu.jhc.jrpc.domain.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancer;
+import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancerFactory;
 import bupt.edu.jhc.jrpc.registry.Registry;
 import bupt.edu.jhc.jrpc.registry.RegistryFactory;
 import bupt.edu.jhc.jrpc.server.tcp.VertxTcpClient;
@@ -11,6 +13,8 @@ import cn.hutool.core.collection.CollUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: 服务代理 (动态代理)
@@ -39,8 +43,12 @@ public class ServiceProxy implements InvocationHandler {
             throw new RuntimeException("暂无服务地址");
         }
 
-        // 选择第一个服务提供者 (后期可优化为负载均衡)
-        var selectedService = serviceMetaInfoList.getFirst();
+        // 负载均衡
+        LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+        // 将调用方法名（请求路径）作为负载均衡参数
+        Map<String, Object> requestParams = new HashMap<>();
+        requestParams.put("methodName", rpcReq.getMethodName());
+        var selectedService = loadBalancer.select(requestParams, serviceMetaInfoList);
 
         // 发送 TCP 请求
         return VertxTcpClient.req(rpcReq, selectedService).getData();

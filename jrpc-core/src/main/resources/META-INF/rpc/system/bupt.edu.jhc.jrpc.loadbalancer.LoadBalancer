@@ -1,0 +1,3 @@
+roundRobin=bupt.edu.jhc.jrpc.loadbalancer.RoundRobinLoadBalancer
+random=bupt.edu.jhc.jrpc.loadbalancer.RandomLoadBalancer
+consistentHash=bupt.edu.jhc.jrpc.loadbalancer.ConsistentHashLoadBalancer

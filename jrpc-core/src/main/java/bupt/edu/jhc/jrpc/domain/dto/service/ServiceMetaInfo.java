@@ -1,4 +1,4 @@
-package bupt.edu.jhc.jrpc.domain;
+package bupt.edu.jhc.jrpc.domain.dto.service;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;

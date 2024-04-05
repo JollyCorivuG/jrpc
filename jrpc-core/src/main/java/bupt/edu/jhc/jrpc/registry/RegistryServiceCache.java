@@ -1,6 +1,6 @@
 package bupt.edu.jhc.jrpc.registry;
 
-import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
 
 import java.util.List;
 

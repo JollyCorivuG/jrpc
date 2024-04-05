@@ -1,9 +1,9 @@
 package bupt.edu.jhc.jrpc.server.tcp;
 
 import bupt.edu.jhc.jrpc.RPCApplication;
-import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
-import bupt.edu.jhc.jrpc.domain.req.RPCReq;
-import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.resp.RPCResp;
 import bupt.edu.jhc.jrpc.protocol.ProtocolConstants;
 import bupt.edu.jhc.jrpc.protocol.ProtocolMsg;
 import bupt.edu.jhc.jrpc.protocol.ProtocolMsgDecoder;

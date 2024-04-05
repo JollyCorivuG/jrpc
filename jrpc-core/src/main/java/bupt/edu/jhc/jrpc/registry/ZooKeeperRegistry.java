@@ -1,7 +1,7 @@
 package bupt.edu.jhc.jrpc.registry;
 
 import bupt.edu.jhc.jrpc.config.RegistryConfig;
-import bupt.edu.jhc.jrpc.domain.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
 import cn.hutool.core.collection.ConcurrentHashSet;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;

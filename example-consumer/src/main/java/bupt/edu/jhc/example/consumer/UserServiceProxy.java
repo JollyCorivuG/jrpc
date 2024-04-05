@@ -2,8 +2,8 @@ package bupt.edu.jhc.example.consumer;
 
 import bupt.edu.jhc.example.common.model.User;
 import bupt.edu.jhc.example.common.service.UserService;
-import bupt.edu.jhc.jrpc.domain.req.RPCReq;
-import bupt.edu.jhc.jrpc.domain.resp.RPCResp;
+import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.resp.RPCResp;
 import bupt.edu.jhc.jrpc.serializer.JDKSerializer;
 import bupt.edu.jhc.jrpc.serializer.Serializer;
 import cn.hutool.http.HttpRequest;
