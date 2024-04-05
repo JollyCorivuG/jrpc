@@ -1,6 +1,7 @@
 package bupt.edu.jhc.jrpc.loadbalancer;
 
 import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,8 @@ import java.util.random.RandomGeneratorFactory;
  * @Author: <a href="https://github.com/JollyCorivuG">JollyCorivuG</a>
  * @CreateTime: 2024/4/5
  */
-public class RandomLoadBalancer implements LoadBalancer {
+public class RandomLoadBalancer extends AbstractLoadBalancer {
+    // 随机数生成器
     private static final RandomGeneratorFactory<RandomGenerator> l128X256MixRandom;
     private static final RandomGenerator randomGenerator;
     static {
@@ -21,10 +23,17 @@ public class RandomLoadBalancer implements LoadBalancer {
     }
 
     @Override
-    public ServiceMetaInfo select(Map<String, Object> reqParams, List<ServiceMetaInfo> serviceMetaInfoList) {
-        if (serviceMetaInfoList.isEmpty()) {
-            return null;
+    protected Selector createSector(List<ServiceMetaInfo> serviceMetaInfoList) {
+        return new RandomSelector(serviceMetaInfoList);
+    }
+
+    @AllArgsConstructor
+    private static class RandomSelector implements Selector {
+        private List<ServiceMetaInfo> serviceMetaInfoList;
+
+        @Override
+        public ServiceMetaInfo nxt(Map<String, Object> reqParams) {
+            return serviceMetaInfoList.get(randomGenerator.nextInt(serviceMetaInfoList.size()));
         }
-        return serviceMetaInfoList.get(randomGenerator.nextInt(serviceMetaInfoList.size()));
     }
 }

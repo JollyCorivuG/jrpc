@@ -36,13 +36,13 @@ public class LoadBalancerTest {
         serviceMetaInfo2.setPort(80);
         List<ServiceMetaInfo> serviceMetaInfoList = Arrays.asList(serviceMetaInfo1, serviceMetaInfo2);
         // 连续调用 3 次
-        ServiceMetaInfo serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+        ServiceMetaInfo serviceMetaInfo = loadBalancer.select(serviceMetaInfo1.getServiceKey(), requestParams, serviceMetaInfoList);
         System.out.println(serviceMetaInfo);
         Assert.assertNotNull(serviceMetaInfo);
-        serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+        serviceMetaInfo = loadBalancer.select(serviceMetaInfo1.getServiceKey(), requestParams, serviceMetaInfoList);
         System.out.println(serviceMetaInfo);
         Assert.assertNotNull(serviceMetaInfo);
-        serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+        serviceMetaInfo = loadBalancer.select(serviceMetaInfo1.getServiceKey(), requestParams, serviceMetaInfoList);
         System.out.println(serviceMetaInfo);
         Assert.assertNotNull(serviceMetaInfo);
     }

@@ -18,5 +18,12 @@ public interface LoadBalancer {
      * @param serviceMetaInfoList 服务节点列表
      * @return 选中的服务节点
      */
-    ServiceMetaInfo select(Map<String, Object> reqParams, List<ServiceMetaInfo> serviceMetaInfoList);
+    ServiceMetaInfo select(String serviceKey, Map<String, Object> reqParams, List<ServiceMetaInfo> serviceMetaInfoList);
+
+    /**
+     * 重新加载服务节点
+     *
+     * @param serviceKey 服务键
+     */
+    void reload(String serviceKey);
 }

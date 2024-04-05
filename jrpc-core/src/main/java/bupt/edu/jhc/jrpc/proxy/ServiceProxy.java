@@ -48,7 +48,7 @@ public class ServiceProxy implements InvocationHandler {
         // 将调用方法名（请求路径）作为负载均衡参数
         Map<String, Object> requestParams = new HashMap<>();
         requestParams.put("methodName", rpcReq.getMethodName());
-        var selectedService = loadBalancer.select(requestParams, serviceMetaInfoList);
+        var selectedService = loadBalancer.select(serviceMetaInfo.getServiceKey(), requestParams, serviceMetaInfoList);
 
         // 发送 TCP 请求
         return VertxTcpClient.req(rpcReq, selectedService).getData();
