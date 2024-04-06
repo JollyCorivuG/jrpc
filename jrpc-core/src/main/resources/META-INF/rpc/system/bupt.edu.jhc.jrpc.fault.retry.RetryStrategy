@@ -1,0 +1,2 @@
+no=bupt.edu.jhc.jrpc.fault.retry.NoRetryStrategy
+fixedInterval=bupt.edu.jhc.jrpc.fault.retry.FixedIntervalRetryStrategy

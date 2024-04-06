@@ -1,5 +1,6 @@
 package bupt.edu.jhc.jrpc.config;
 
+import bupt.edu.jhc.jrpc.fault.retry.RetryStrategyKeys;
 import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancerKeys;
 import bupt.edu.jhc.jrpc.serializer.SerializerKeys;
 import lombok.Data;
@@ -19,4 +20,5 @@ public class RPCConfig {
     private String serializer = SerializerKeys.JDK;
     private RegistryConfig registryConfig = new RegistryConfig();
     private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
+    private String retryStrategy = RetryStrategyKeys.NO;
 }

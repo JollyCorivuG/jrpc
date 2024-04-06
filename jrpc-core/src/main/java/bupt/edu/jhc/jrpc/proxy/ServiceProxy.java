@@ -4,6 +4,8 @@ import bupt.edu.jhc.jrpc.RPCApplication;
 import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
 import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
 import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
+import bupt.edu.jhc.jrpc.fault.retry.RetryStrategy;
+import bupt.edu.jhc.jrpc.fault.retry.RetryStrategyFactory;
 import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancer;
 import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancerFactory;
 import bupt.edu.jhc.jrpc.registry.Registry;
@@ -14,7 +16,6 @@ import cn.hutool.core.collection.CollUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Description: 服务代理 (动态代理)
@@ -25,7 +26,7 @@ public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 构建 RPC 请求
-        RPCReq rpcReq = RPCReq.builder()
+        var rpcReq = RPCReq.builder()
                 .serviceName(method.getDeclaringClass().getName())
                 .methodName(method.getName())
                 .parameterTypes(method.getParameterTypes())
@@ -46,11 +47,13 @@ public class ServiceProxy implements InvocationHandler {
         // 负载均衡
         LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
         // 将调用方法名（请求路径）作为负载均衡参数
-        Map<String, Object> requestParams = new HashMap<>();
+        var requestParams = new HashMap<String, Object>();
         requestParams.put("methodName", rpcReq.getMethodName());
         var selectedService = loadBalancer.select(serviceMetaInfo.getServiceKey(), requestParams, serviceMetaInfoList);
 
-        // 发送 TCP 请求
-        return VertxTcpClient.req(rpcReq, selectedService).getData();
+        // 使用重试机制, 发送 TCP 请求
+        RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+        var rpcResp = retryStrategy.doRetry(() -> VertxTcpClient.req(rpcReq, selectedService));
+        return rpcResp.getData();
     }
 }
