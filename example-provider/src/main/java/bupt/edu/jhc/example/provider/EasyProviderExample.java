@@ -2,13 +2,10 @@ package bupt.edu.jhc.example.provider;
 
 
 import bupt.edu.jhc.example.common.service.UserService;
-import bupt.edu.jhc.jrpc.RPCApplication;
-import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
-import bupt.edu.jhc.jrpc.registry.LocalRegistry;
-import bupt.edu.jhc.jrpc.registry.Registry;
-import bupt.edu.jhc.jrpc.registry.RegistryFactory;
-import bupt.edu.jhc.jrpc.server.Server;
-import bupt.edu.jhc.jrpc.server.tcp.VertxTcpServer;
+import bupt.edu.jhc.jrpc.bootstrap.ProviderBootstrap;
+import bupt.edu.jhc.jrpc.domain.dto.service.ServiceRegisterInfo;
+
+import java.util.ArrayList;
 
 /**
  * @Description: 建议服务提供者示例
@@ -16,32 +13,16 @@ import bupt.edu.jhc.jrpc.server.tcp.VertxTcpServer;
  * @CreateTime: 2024/3/14
  */
 public class EasyProviderExample {
-    public static void main(String[] args) {
-        // RPC 框架初始化
-        RPCApplication.init();
+    public static void main(String[] args) throws RuntimeException {
+        // 要注册的服务
+        var serviceRegisterInfoList = new ArrayList<ServiceRegisterInfo<?>>();
+        var serviceRegisterInfo = ServiceRegisterInfo.<UserService>builder()
+                .name(UserService.class.getName())
+                .implClass(UserServiceImpl.class)
+                .build();
+        serviceRegisterInfoList.add(serviceRegisterInfo);
 
-        // 注册服务
-        var serviceName = UserService.class.getName();
-        LocalRegistry.register(serviceName, UserServiceImpl.class);
-
-        // 注册服务到注册中心
-        var rpcConfig = RPCApplication.getRpcConfig();
-        var registryConfig = rpcConfig.getRegistryConfig();
-        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
-        var serviceMetaInfo = new ServiceMetaInfo();
-        serviceMetaInfo.setName(serviceName);
-        serviceMetaInfo.setVersion("1.0");
-        serviceMetaInfo.setHost(rpcConfig.getServerHost());
-        serviceMetaInfo.setPort(rpcConfig.getServerPort());
-
-        try {
-            registry.register(serviceMetaInfo);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        // 启动 TCP 服务
-        Server tcpServer  = new VertxTcpServer();
-        tcpServer.start(rpcConfig.getServerPort());
+        // 服务提供者初始化
+        ProviderBootstrap.init(serviceRegisterInfoList);
     }
 }

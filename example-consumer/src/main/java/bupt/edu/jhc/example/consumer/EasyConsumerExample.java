@@ -2,10 +2,8 @@ package bupt.edu.jhc.example.consumer;
 
 import bupt.edu.jhc.example.common.model.User;
 import bupt.edu.jhc.example.common.service.UserService;
-import bupt.edu.jhc.jrpc.config.RPCConfig;
-import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
+import bupt.edu.jhc.jrpc.bootstrap.ConsumerBootstrap;
 import bupt.edu.jhc.jrpc.proxy.ServiceProxyFactory;
-import bupt.edu.jhc.jrpc.utils.ConfigUtils;
 
 import java.util.stream.IntStream;
 
@@ -16,10 +14,10 @@ import java.util.stream.IntStream;
  */
 public class EasyConsumerExample {
     public static void main(String[] args) {
-        var rpcConfig = ConfigUtils.loadConfig(RPCConfig.class, RPCConstants.DEFAULT_CONFIG_PREFIX);
-        System.out.println(rpcConfig);
+        // 初始化
+        ConsumerBootstrap.init();
 
-        UserService userService = ServiceProxyFactory.getProxy(UserService.class);
+        var userService = ServiceProxyFactory.getProxy(UserService.class);
         IntStream.range(0, 3).forEach(i -> {
             var user = new User();
             user.setName("JollyCorivuG" + i);

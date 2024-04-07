@@ -1,5 +1,6 @@
 package bupt.edu.jhc.jrpc.domain.dto.service;
 
+import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ServiceMetaInfo {
     private String name; // 服务名
-    private String version; // 版本
+    private String version = RPCConstants.DEFAULT_SERVICE_VERSION; // 版本
     private String host; // 主机名
     private Integer port; // 端口
     private String group; // 分组
