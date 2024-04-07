@@ -12,19 +12,15 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime: 2024/4/6
  */
 public class FixedIntervalRetryStrategy implements RetryStrategy {
+    private static final long FIXED_INTERVAL = 3L;
+    private static final int RETRY_TIMES = 3;
 
     @Override
     public RPCResp doRetry(Callable<RPCResp> task) throws Exception {
         return RetryerBuilder.<RPCResp>newBuilder()
                 .retryIfExceptionOfType(Exception.class)
-                .withWaitStrategy(WaitStrategies.fixedWait(3L, TimeUnit.SECONDS))
-                .withStopStrategy(StopStrategies.stopAfterAttempt(3))
-                .withRetryListener(new RetryListener() {
-                    @Override
-                    public <V> void onRetry(Attempt<V> attempt) {
-                        System.out.println("重试次数: " + attempt.getAttemptNumber());
-                    }
-                })
+                .withWaitStrategy(WaitStrategies.fixedWait(FIXED_INTERVAL, TimeUnit.SECONDS))
+                .withStopStrategy(StopStrategies.stopAfterAttempt(RETRY_TIMES))
                 .build()
                 .call(task);
     }

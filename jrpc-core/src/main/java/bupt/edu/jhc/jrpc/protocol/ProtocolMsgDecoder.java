@@ -53,6 +53,7 @@ public class ProtocolMsgDecoder {
         if (serializerEnum == null) {
             throw new RuntimeException("序列化消息的协议不存在");
         }
+        System.out.println("使用的序列化器：" + serializerEnum.getValue());
         Serializer serializer = SerializerFactory.getSerializer(serializerEnum.getValue());
         var messageTypeEnum = ProtocolMsgTypeEnum.of((int) header.getType());
         if (messageTypeEnum == null) {

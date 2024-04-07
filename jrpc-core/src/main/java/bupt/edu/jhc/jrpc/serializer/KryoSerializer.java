@@ -3,7 +3,6 @@ package bupt.edu.jhc.jrpc.serializer;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,7 +20,6 @@ public class KryoSerializer implements Serializer {
             () -> {
                 var kryo = new Kryo();
                 kryo.setRegistrationRequired(false);
-                kryo.setDefaultSerializer(CompatibleFieldSerializer.class);
                 return kryo;
             }
     );
@@ -32,6 +30,7 @@ public class KryoSerializer implements Serializer {
         var byteArrayOutputStream = new ByteArrayOutputStream();
         try (var output = new Output(byteArrayOutputStream)) {
             KRYO.get().writeObject(output, obj);
+            output.flush(); // 记得刷新 output, 否则 byte 数组可能为空
             return byteArrayOutputStream.toByteArray();
         }
     }
