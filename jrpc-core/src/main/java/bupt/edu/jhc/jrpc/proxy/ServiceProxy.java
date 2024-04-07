@@ -3,9 +3,12 @@ package bupt.edu.jhc.jrpc.proxy;
 import bupt.edu.jhc.jrpc.RPCApplication;
 import bupt.edu.jhc.jrpc.domain.constants.RPCConstants;
 import bupt.edu.jhc.jrpc.domain.dto.req.RPCReq;
+import bupt.edu.jhc.jrpc.domain.dto.resp.RPCResp;
 import bupt.edu.jhc.jrpc.domain.dto.service.ServiceMetaInfo;
 import bupt.edu.jhc.jrpc.fault.retry.RetryStrategy;
 import bupt.edu.jhc.jrpc.fault.retry.RetryStrategyFactory;
+import bupt.edu.jhc.jrpc.fault.tolerant.TolerantStrategy;
+import bupt.edu.jhc.jrpc.fault.tolerant.TolerantStrategyFactory;
 import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancer;
 import bupt.edu.jhc.jrpc.loadbalancer.LoadBalancerFactory;
 import bupt.edu.jhc.jrpc.registry.Registry;
@@ -54,7 +57,14 @@ public class ServiceProxy implements InvocationHandler {
 
         // 使用重试机制, 发送 TCP 请求
         RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
-        var rpcResp = retryStrategy.doRetry(() -> VertxTcpClient.req(rpcReq, selectedService));
+        RPCResp rpcResp;
+        try {
+            rpcResp = retryStrategy.doRetry(() -> VertxTcpClient.req(rpcReq, selectedService));
+        } catch (Exception e) {
+            // 容错机制
+            TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+            rpcResp = tolerantStrategy.doTolerant(null, e);
+        }
         return rpcResp.getData();
     }
 }

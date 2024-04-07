@@ -1,0 +1,2 @@
+failFast=bupt.edu.jhc.jrpc.fault.tolerant.FailFastTolerantStrategy
+failSafe=bupt.edu.jhc.jrpc.fault.tolerant.FailSafeTolerantStrategy
