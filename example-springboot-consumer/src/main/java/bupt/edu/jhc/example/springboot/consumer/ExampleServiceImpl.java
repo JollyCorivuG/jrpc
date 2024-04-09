@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ExampleServiceImpl {
 
     /**
-     * 使用 Rpc 框架注入
+     * 使用 RPC 框架注入
      */
     @RPCReference
     private UserService userService;
